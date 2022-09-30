@@ -1,10 +1,27 @@
-// If life was easy, we could just do things the easy way:
-// var getElementsByClassName = function (className) {
-//   return document.getElementsByClassName(className);
-// };
 
-// But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className
-) {
-  // your code here
+//Input class name
+//Output, array of HTMLelements
+//Must use document.body (to search into)
+//Must use element.childnodes (check if child nodes exist and look into classlist)
+  //Recursion to look into grandchild, etc
+//Must use element.classList (search within each node if classList = className)
+
+var getElementsByClassName = function(className) {
+
+  var htmlCollection = [];
+
+  var searchForClass = function (element) {
+
+    if (element.classList && element.classList.contains(className)) {
+      htmlCollection.push(element);
+    }
+    if (element.childNodes.length) {
+      element.childNodes.forEach(function (item) {
+        searchForClass(item);
+      });
+    }
+  };
+
+  searchForClass(document.body);
+  return htmlCollection;
 };
